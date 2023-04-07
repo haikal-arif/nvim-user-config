@@ -21,7 +21,7 @@ local config = {
             guifont = "FiraCode NFM:h12"
         },
         g = {
-            -- neovide_transparency = 0.8
+            -- neovide_transparency = 0.5
         }
     },
     lsp = {
@@ -40,14 +40,10 @@ local config = {
         config = {
             julials = {
                 on_new_config = function(new_config, _)
-                    -- local julia_lsp_env = vim.fn.expand("~/.julia/environments/nvim-lspconfig/")
                     local cmd = {
                         "julia",
                         "--history-file=no",
                         "--startup-file=no",
-                        -- "--sysimage=" .. julia_lsp_env .. "/julials.so",
-                        -- "--sysimage-native-code=yes",
-                        -- "--trace-compile=" .. julia_lsp_env .. "tracecompilelsp.jl",
                         "-e",
                         [[
               # Load LanguageServer.jl: attempt to load from ~/.julia/environments/nvim-lspconfig
@@ -109,6 +105,20 @@ local config = {
     },
     plugins = {
         {
+            "nvim-treesitter/nvim-treesitter",
+            ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "help", "rust", "python", "julia" },
+        },
+        {
+            "xiyaowong/transparent.nvim",
+            lazy = false
+        },
+        {
+            "sainnhe/sonokai",
+            init = function() -- init function runs before the plugin is loaded
+                -- vim.g.sonokai_style = "maia"
+            end,
+        },
+        {
             "simrat39/rust-tools.nvim",
             after = "mason-lspconfig.nvim",
             config = {
@@ -123,7 +133,8 @@ local config = {
         {
             "williamboman/mason-lspconfig",
             after = "mason.nvim",
-            ensure_installed = { "rust_analyzer", "clangd", "sumneko_lua" },
+            ensure_installed = { "rust_analyzer", "rustfmt", "clangd", "sumneko_lua", "julia_lsp", "prettier", "pyright",
+                "autopep8" },
         },
         {
             "tanvirtin/monokai.nvim"
@@ -228,7 +239,6 @@ local config = {
                         '⠀⠀⠀⠐⢤⣀⣀⢀⣀⣠⣴⣿⣿⠿⠋⠙⠿⣿⣿⣦⣄⣀⠀⠀⣀⡠⠂⠀⠀⠀ ',
                         '⠀⠀⠀⠀⠀⠈⠉⠛⠛⠛⠛⠉⠀⠀⠀⠀⠀⠈⠉⠛⠛⠛⠛⠋⠁⠀⠀⠀⠀⠀ ',
                     },
-
                     {
                         [[=================     ===============     ===============   ========  ========]],
                         [[\\ . . . . . . .\\   //. . . . . . .\\   //. . . . . . .\\  \\. . .\\// . . //]],
@@ -255,13 +265,13 @@ local config = {
             end,
         }
     },
-    -- colorscheme = "monokai",
+    colorscheme = "sonokai",
     polish = function()
-        vim.cmd [[
-      let &shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
-		  let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
-		  set shellquote= shellxquote=
-    ]]
+        vim.cmd([[
+          let &shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+        let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+        set shellquote= shellxquote=
+        ]])
     end
 }
 
