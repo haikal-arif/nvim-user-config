@@ -10,6 +10,9 @@ local config = {
                 function() require("astronvim.utils.buffer").nav(-(vim.v.count > 0 and vim.v.count or 1)) end,
                 desc = "Previous buffer"
             },
+        },
+        t = {
+            ["<Esc>"] = { "<C-\\><C-n>", desc = "Normal Mode from Terminal" }
         }
     },
     options = {
@@ -97,13 +100,16 @@ local config = {
                 capabilities = {
                     offsetEncoding = "utf-8"
                 },
-                cmd = {
-
-                }
             }
         }
     },
     plugins = {
+        {
+            "kylechui/nvim-surround",
+            config = function()
+                require("nvim-surround").setup()
+            end
+        },
         {
             "nvim-treesitter/nvim-treesitter",
             ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "help", "rust", "python", "julia" },
@@ -269,8 +275,8 @@ local config = {
     polish = function()
         vim.cmd([[
           let &shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
-        let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
-        set shellquote= shellxquote=
+          let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+          set shellquote= shellxquote=
         ]])
     end
 }
