@@ -112,7 +112,7 @@ local config = {
         },
         {
             "nvim-treesitter/nvim-treesitter",
-            ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "help", "rust", "python", "julia" },
+            ensure_installed = { "c", "lua", "vim", "query", "help", "rust", "python", "julia" },
         },
         {
             "xiyaowong/transparent.nvim",
